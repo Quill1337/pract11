@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace pract11
 {
@@ -37,35 +38,27 @@ namespace pract11
 
         private void FindingTheFirstLine_Click(object sender, RoutedEventArgs e)
         {
-            listBoxNumbers.Items.Clear();
-            string lineNumberOne = firstLine.Text;
-
-            Regex regex = new Regex(@"\b2\+*\+3\b"); //строку 2+3, не захватив остальные
-            MatchCollection match = regex.Matches(lineNumberOne);
-
-            object[] array = new object[match.Count];
-            match.CopyTo(array, 0);
-
-            for (int i = 0; i < match.Count; i++)
+            ResStrTextBox.Clear();
+            Regex regex = new Regex(@"2[+]3"); //Строку 2+3 не захватив остальные
+            MatchCollection matchCollection = regex.Matches(FirStr.Text);
+            object[] mas = new object[matchCollection.Count];
+            matchCollection.CopyTo(mas, 0);
+            foreach (object item in mas)
             {
-                listBoxNumbers.Items.Add(match[i]);
+                ResStrTextBox.Text = $"{item}";
             }
         }
 
         private void FindingTheSecondLine_Click(object sender, RoutedEventArgs e)
         {
-            listBoxNumbers.Items.Clear();
-            string lineNumberTwo = secondLine.Text;
-
-            Regex regex = new Regex(@"a(b{2,4})a"); //строки abba, abbba, abbbba и только их
-            MatchCollection match = regex.Matches(lineNumberTwo);
-
-            object[] array = new object[match.Count];
-            match.CopyTo(array, 0);
-
-            for (int i = 0; i < match.Count; i++)
+                    ResStrTextBox.Clear();
+            Regex regex = new Regex(@"ab{2,4}a"); //строки abba, abbba, abbbba и только их.
+            MatchCollection matchCollection = regex.Matches(SecStr.Text);
+            object[] mas = new object[matchCollection.Count];
+            matchCollection.CopyTo(mas, 0);
+            foreach (object item in mas)
             {
-                listBoxNumbers.Items.Add(match[i]);
+                ResStrTextBox.Text = $" {item} " + ResStrTextBox.Text;
             }
         }
         private void Information_Click(object sender, RoutedEventArgs e)
